@@ -42,7 +42,7 @@ export default function Navbar() {
           ) : session ? (
             <>
               <Button variant="ghost" asChild className="text-zinc-400 hover:text-black hidden sm:flex">
-                <Link href="/dashboard" className="gap-2">
+                <Link href="/dashboard/project" className="gap-2">
                   <LayoutDashboard className="w-4 h-4" /> Dashboard
                 </Link>
               </Button>
