@@ -40,7 +40,7 @@ export default function Home() {
               <Button disabled className="bg-zinc-800 w-40 h-12 animate-pulse" />
             ) : session ? (
               <Button asChild size="lg" className="bg-white text-black hover:bg-zinc-200 hover:text-white h-12 px-8 group">
-                <Link href="/dashboard" className="flex items-center gap-2">
+                <Link href="/dashboard/project" className="flex items-center gap-2">
                   Enter Workspace <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>

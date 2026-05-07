@@ -47,3 +47,8 @@ export type Project = Prisma.ProjectModel
  * 
  */
 export type ApiKey = Prisma.ApiKeyModel
+/**
+ * Model KeyUsage
+ * 
+ */
+export type KeyUsage = Prisma.KeyUsageModel

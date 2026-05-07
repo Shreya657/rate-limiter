@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 // import { UserButton } from "./UserButton"; // Use your existing user logic or a custom component
-import { ShieldCheck, Bell, LogOut,Loader2,User } from "lucide-react";
+import { ShieldCheck, Bell, LogOut,Loader2,User, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { authClient, signOut } from "@/lib/auth-client";
 import { useState } from "react";
@@ -34,8 +34,8 @@ export default function Navbar() {
       <div className="px-4 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tighter">
-            <div className="bg-white p-1 rounded">
-              <ShieldCheck className="text-black w-5 h-5" />
+            <div className=" p-1 rounded">
+             <Shield className="h-5 w-5 text-teal-500" />
             </div>
             <span className="hidden sm:block text-zinc-200">ShieldLimit</span>
           </Link>

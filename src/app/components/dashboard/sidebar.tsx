@@ -2,7 +2,7 @@
 
 import { useState } from "react"; 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { 
   LayoutDashboard, 
@@ -12,26 +12,45 @@ import {
   Activity,
   ChevronRight,
   PanelLeftClose, 
-  PanelLeftOpen   
+  PanelLeftOpen,   
+  BookOpen
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+
+
+export default function Sidebar({ activeProjectId }: { activeProjectId?: string}) {
+    const params = useParams();
+const currentId = (params?.projectId as string) || activeProjectId;
+console.log("Extracted projectId from URL:", currentId); // Debug log to verify projectId extraction
+  const pathname = usePathname();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+
 
 const routes = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/dashboard/project", color: "text-sky-500" },
   { label: "My Shields", icon: Shield, href: "/dashboard/MyShields", color: "text-violet-500" },
-  { label: "Usage Stats", icon: Activity, href: "/dashboard/stats", color: "text-pink-700" },
+{ 
+    label: "Usage Stats", 
+    icon: Activity, 
+    href: currentId ? `/dashboard/${currentId}/stats` : "/dashboard", 
+    color: "text-pink-700" 
+  },
+{ 
+  label: "Docs", 
+  icon: BookOpen, 
+  href: currentId ? `/dashboard/${currentId}/doc` : "/dashboard", 
+  color: "text-blue-500" 
+},
   { label: "Billing", icon: CreditCard, href: "/dashboard/billing" },
   { label: "Settings", icon: Settings, href: "/dashboard/settings" },
 ];
 
-export default function Sidebar() {
-  const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(false);
-
   return (
     <div 
       className={cn(
-        "relative flex flex-col h-[calc(100vh-64px)] bg-zinc-950 text-white border-r border-zinc-800 transition-all duration-300 ease-in-out hidden md:flex",
+        "sticky top-16 flex flex-col h-[calc(100vh-64px)]  bg-zinc-950 text-white border-r border-zinc-800 transition-all duration-300 ease-in-out hidden md:flex ",
         isCollapsed ? "w-20" : "w-64"
       )}
     >
@@ -45,27 +64,55 @@ export default function Sidebar() {
       </Button>
 
       <div className="px-3 py-4 flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="space-y-1">
-          {routes.map((route) => (
-            <Link
-              key={route.href}
-              href={route.href}
-              className={cn(
-                "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition-all duration-200",
-                pathname === route.href ? "text-white bg-white/10" : "text-zinc-400 hover:bg-white/5 hover:text-white",
-                isCollapsed && "justify-center px-2"
-              )}
-            >
-              <div className="flex items-center flex-1">
-                <route.icon className={cn("h-5 w-5", !isCollapsed && "mr-3", route.color)} />
-                {!isCollapsed && <span className="truncate">{route.label}</span>}
-              </div>
-              {!isCollapsed && pathname === route.href && (
-                <ChevronRight className="h-4 w-4 text-zinc-500" />
-              )}
-            </Link>
-          ))}
+       <div className="space-y-1">
+  {routes.map((route) => {
+    const isUsageStats = route.label === "Usage Stats";
+
+    // Use a standard <a> tag for the dynamic route to prevent the Router crash
+    if (isUsageStats) {
+      return (
+        <a
+          key={route.href}
+          href={route.href}
+          className={cn(
+            "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition-all duration-200",
+            pathname === route.href ? "text-white bg-white/10" : "text-zinc-400 hover:bg-white/5 hover:text-white",
+            isCollapsed && "justify-center px-2"
+          )}
+        >
+          <div className="flex items-center flex-1">
+            <route.icon className={cn("h-5 w-5", !isCollapsed && "mr-3", route.color)} />
+            {!isCollapsed && <span className="truncate">{route.label}</span>}
+          </div>
+          {!isCollapsed && pathname === route.href && (
+            <ChevronRight className="h-4 w-4 text-zinc-500" />
+          )}
+        </a>
+      );
+    }
+
+    // Keep the rest of the links as standard Next.js Links
+    return (
+      <Link
+        key={route.href}
+        href={route.href}
+        className={cn(
+          "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition-all duration-200",
+          pathname === route.href ? "text-white bg-white/10" : "text-zinc-400 hover:bg-white/5 hover:text-white",
+          isCollapsed && "justify-center px-2"
+        )}
+      >
+        <div className="flex items-center flex-1">
+          <route.icon className={cn("h-5 w-5", !isCollapsed && "mr-3", route.color)} />
+          {!isCollapsed && <span className="truncate">{route.label}</span>}
         </div>
+        {!isCollapsed && pathname === route.href && (
+          <ChevronRight className="h-4 w-4 text-zinc-500" />
+        )}
+      </Link>
+    );
+  })}
+</div>
       </div>
       
       <div className={cn("px-6 py-4 border-t border-zinc-800", isCollapsed && "px-0 flex justify-center")}>

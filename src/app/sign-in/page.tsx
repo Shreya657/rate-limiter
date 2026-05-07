@@ -18,7 +18,7 @@ export default function SignIn() {
     await authClient.signIn.email({
       email,
       password,
-      callbackURL: "/dashboard",
+      callbackURL: "/dashboard/project",
     }, {
       onRequest: () => setLoading(true),
       onResponse: () => setLoading(false),
@@ -29,7 +29,7 @@ export default function SignIn() {
   const handleSocialSignIn = async (provider: "github" | "google") => {
   await authClient.signIn.social({
     provider,
-    callbackURL: "/dashboard",
+    callbackURL: "/dashboard/project",
   
   });
 };

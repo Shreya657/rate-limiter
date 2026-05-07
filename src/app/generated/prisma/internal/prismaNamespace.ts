@@ -389,7 +389,8 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Project: 'Project',
-  ApiKey: 'ApiKey'
+  ApiKey: 'ApiKey',
+  KeyUsage: 'KeyUsage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "project" | "apiKey"
+    modelProps: "user" | "session" | "account" | "verification" | "project" | "apiKey" | "keyUsage"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    KeyUsage: {
+      payload: Prisma.$KeyUsagePayload<ExtArgs>
+      fields: Prisma.KeyUsageFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.KeyUsageFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.KeyUsageFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>
+        }
+        findFirst: {
+          args: Prisma.KeyUsageFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.KeyUsageFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>
+        }
+        findMany: {
+          args: Prisma.KeyUsageFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>[]
+        }
+        create: {
+          args: Prisma.KeyUsageCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>
+        }
+        createMany: {
+          args: Prisma.KeyUsageCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.KeyUsageCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>[]
+        }
+        delete: {
+          args: Prisma.KeyUsageDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>
+        }
+        update: {
+          args: Prisma.KeyUsageUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>
+        }
+        deleteMany: {
+          args: Prisma.KeyUsageDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.KeyUsageUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.KeyUsageUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>[]
+        }
+        upsert: {
+          args: Prisma.KeyUsageUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$KeyUsagePayload>
+        }
+        aggregate: {
+          args: Prisma.KeyUsageAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateKeyUsage>
+        }
+        groupBy: {
+          args: Prisma.KeyUsageGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeyUsageGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.KeyUsageCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.KeyUsageCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -926,13 +1001,13 @@ export const AccountScalarFieldEnum = {
   providerId: 'providerId',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
-  idToken: 'idToken',
-  accessTokenExpiresAt: 'accessTokenExpiresAt',
-  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
-  scope: 'scope',
   password: 'password',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  idToken: 'idToken',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope'
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
@@ -975,6 +1050,17 @@ export const ApiKeyScalarFieldEnum = {
 } as const
 
 export type ApiKeyScalarFieldEnum = (typeof ApiKeyScalarFieldEnum)[keyof typeof ApiKeyScalarFieldEnum]
+
+
+export const KeyUsageScalarFieldEnum = {
+  id: 'id',
+  apiKeyId: 'apiKeyId',
+  timestamp: 'timestamp',
+  success: 'success',
+  blocked: 'blocked'
+} as const
+
+export type KeyUsageScalarFieldEnum = (typeof KeyUsageScalarFieldEnum)[keyof typeof KeyUsageScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1185,6 +1271,7 @@ export type GlobalOmitConfig = {
   verification?: Prisma.VerificationOmit
   project?: Prisma.ProjectOmit
   apiKey?: Prisma.ApiKeyOmit
+  keyUsage?: Prisma.KeyUsageOmit
 }
 
 /* Types for Logging */

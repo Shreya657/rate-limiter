@@ -56,7 +56,8 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   Project: 'Project',
-  ApiKey: 'ApiKey'
+  ApiKey: 'ApiKey',
+  KeyUsage: 'KeyUsage'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -109,13 +110,13 @@ export const AccountScalarFieldEnum = {
   providerId: 'providerId',
   accessToken: 'accessToken',
   refreshToken: 'refreshToken',
-  idToken: 'idToken',
-  accessTokenExpiresAt: 'accessTokenExpiresAt',
-  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
-  scope: 'scope',
   password: 'password',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  accessTokenExpiresAt: 'accessTokenExpiresAt',
+  idToken: 'idToken',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  scope: 'scope'
 } as const
 
 export type AccountScalarFieldEnum = (typeof AccountScalarFieldEnum)[keyof typeof AccountScalarFieldEnum]
@@ -158,6 +159,17 @@ export const ApiKeyScalarFieldEnum = {
 } as const
 
 export type ApiKeyScalarFieldEnum = (typeof ApiKeyScalarFieldEnum)[keyof typeof ApiKeyScalarFieldEnum]
+
+
+export const KeyUsageScalarFieldEnum = {
+  id: 'id',
+  apiKeyId: 'apiKeyId',
+  timestamp: 'timestamp',
+  success: 'success',
+  blocked: 'blocked'
+} as const
+
+export type KeyUsageScalarFieldEnum = (typeof KeyUsageScalarFieldEnum)[keyof typeof KeyUsageScalarFieldEnum]
 
 
 export const SortOrder = {
