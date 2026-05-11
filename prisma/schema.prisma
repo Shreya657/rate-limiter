@@ -67,6 +67,7 @@ model Project {
   window      Int      @default(60)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  allowedOrigins String[] @default([])
   apiKeys     ApiKey[]
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

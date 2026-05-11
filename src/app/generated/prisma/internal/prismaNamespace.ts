@@ -1033,7 +1033,8 @@ export const ProjectScalarFieldEnum = {
   limit: 'limit',
   window: 'window',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  allowedOrigins: 'allowedOrigins'
 } as const
 
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]

@@ -43,8 +43,8 @@ const routes = [
   href: currentId ? `/dashboard/${currentId}/doc` : "/dashboard", 
   color: "text-blue-500" 
 },
-  { label: "Billing", icon: CreditCard, href: "/dashboard/billing" },
-  { label: "Settings", icon: Settings, href: "/dashboard/settings" },
+  // { label: "Billing", icon: CreditCard, href: "/dashboard/billing" },
+  { label: "Settings", icon: Settings,  href: currentId ? `/dashboard/${currentId}/settings` : "/dashboard" },
 ];
 
   return (

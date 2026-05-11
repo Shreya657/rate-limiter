@@ -67,6 +67,7 @@ export type ProjectCountAggregateOutputType = {
   window: number
   createdAt: number
   updatedAt: number
+  allowedOrigins: number
   _all: number
 }
 
@@ -112,6 +113,7 @@ export type ProjectCountAggregateInputType = {
   window?: true
   createdAt?: true
   updatedAt?: true
+  allowedOrigins?: true
   _all?: true
 }
 
@@ -210,6 +212,7 @@ export type ProjectGroupByOutputType = {
   window: number
   createdAt: Date
   updatedAt: Date
+  allowedOrigins: string[]
   _count: ProjectCountAggregateOutputType | null
   _avg: ProjectAvgAggregateOutputType | null
   _sum: ProjectSumAggregateOutputType | null
@@ -244,6 +247,7 @@ export type ProjectWhereInput = {
   window?: Prisma.IntFilter<"Project"> | number
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  allowedOrigins?: Prisma.StringNullableListFilter<"Project">
   apiKeys?: Prisma.ApiKeyListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
@@ -257,6 +261,7 @@ export type ProjectOrderByWithRelationInput = {
   window?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowedOrigins?: Prisma.SortOrder
   apiKeys?: Prisma.ApiKeyOrderByRelationAggregateInput
   user?: Prisma.UserOrderByWithRelationInput
 }
@@ -273,6 +278,7 @@ export type ProjectWhereUniqueInput = Prisma.AtLeast<{
   window?: Prisma.IntFilter<"Project"> | number
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  allowedOrigins?: Prisma.StringNullableListFilter<"Project">
   apiKeys?: Prisma.ApiKeyListRelationFilter
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id">
@@ -286,6 +292,7 @@ export type ProjectOrderByWithAggregationInput = {
   window?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowedOrigins?: Prisma.SortOrder
   _count?: Prisma.ProjectCountOrderByAggregateInput
   _avg?: Prisma.ProjectAvgOrderByAggregateInput
   _max?: Prisma.ProjectMaxOrderByAggregateInput
@@ -305,6 +312,7 @@ export type ProjectScalarWhereWithAggregatesInput = {
   window?: Prisma.IntWithAggregatesFilter<"Project"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Project"> | Date | string
+  allowedOrigins?: Prisma.StringNullableListFilter<"Project">
 }
 
 export type ProjectCreateInput = {
@@ -315,6 +323,7 @@ export type ProjectCreateInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutProjectInput
   user: Prisma.UserCreateNestedOneWithoutProjectsInput
 }
@@ -328,6 +337,7 @@ export type ProjectUncheckedCreateInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -339,6 +349,7 @@ export type ProjectUpdateInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyUpdateManyWithoutProjectNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
 }
@@ -352,6 +363,7 @@ export type ProjectUncheckedUpdateInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -364,6 +376,7 @@ export type ProjectCreateManyInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
 }
 
 export type ProjectUpdateManyMutationInput = {
@@ -374,6 +387,7 @@ export type ProjectUpdateManyMutationInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
 }
 
 export type ProjectUncheckedUpdateManyInput = {
@@ -385,6 +399,7 @@ export type ProjectUncheckedUpdateManyInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
 }
 
 export type ProjectListRelationFilter = {
@@ -397,6 +412,14 @@ export type ProjectOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type ProjectCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
@@ -406,6 +429,7 @@ export type ProjectCountOrderByAggregateInput = {
   window?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  allowedOrigins?: Prisma.SortOrder
 }
 
 export type ProjectAvgOrderByAggregateInput = {
@@ -487,12 +511,21 @@ export type ProjectUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.ProjectScalarWhereInput | Prisma.ProjectScalarWhereInput[]
 }
 
+export type ProjectCreateallowedOriginsInput = {
+  set: string[]
+}
+
 export type IntFieldUpdateOperationsInput = {
   set?: number
   increment?: number
   decrement?: number
   multiply?: number
   divide?: number
+}
+
+export type ProjectUpdateallowedOriginsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type ProjectCreateNestedOneWithoutApiKeysInput = {
@@ -517,6 +550,7 @@ export type ProjectCreateWithoutUserInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyCreateNestedManyWithoutProjectInput
 }
 
@@ -528,6 +562,7 @@ export type ProjectUncheckedCreateWithoutUserInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyUncheckedCreateNestedManyWithoutProjectInput
 }
 
@@ -569,6 +604,7 @@ export type ProjectScalarWhereInput = {
   window?: Prisma.IntFilter<"Project"> | number
   createdAt?: Prisma.DateTimeFilter<"Project"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Project"> | Date | string
+  allowedOrigins?: Prisma.StringNullableListFilter<"Project">
 }
 
 export type ProjectCreateWithoutApiKeysInput = {
@@ -579,6 +615,7 @@ export type ProjectCreateWithoutApiKeysInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
   user: Prisma.UserCreateNestedOneWithoutProjectsInput
 }
 
@@ -591,6 +628,7 @@ export type ProjectUncheckedCreateWithoutApiKeysInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
 }
 
 export type ProjectCreateOrConnectWithoutApiKeysInput = {
@@ -617,6 +655,7 @@ export type ProjectUpdateWithoutApiKeysInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
   user?: Prisma.UserUpdateOneRequiredWithoutProjectsNestedInput
 }
 
@@ -629,6 +668,7 @@ export type ProjectUncheckedUpdateWithoutApiKeysInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
 }
 
 export type ProjectCreateManyUserInput = {
@@ -639,6 +679,7 @@ export type ProjectCreateManyUserInput = {
   window?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  allowedOrigins?: Prisma.ProjectCreateallowedOriginsInput | string[]
 }
 
 export type ProjectUpdateWithoutUserInput = {
@@ -649,6 +690,7 @@ export type ProjectUpdateWithoutUserInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyUpdateManyWithoutProjectNestedInput
 }
 
@@ -660,6 +702,7 @@ export type ProjectUncheckedUpdateWithoutUserInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
   apiKeys?: Prisma.ApiKeyUncheckedUpdateManyWithoutProjectNestedInput
 }
 
@@ -671,6 +714,7 @@ export type ProjectUncheckedUpdateManyWithoutUserInput = {
   window?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  allowedOrigins?: Prisma.ProjectUpdateallowedOriginsInput | string[]
 }
 
 
@@ -713,6 +757,7 @@ export type ProjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   window?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedOrigins?: boolean
   apiKeys?: boolean | Prisma.Project$apiKeysArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ProjectCountOutputTypeDefaultArgs<ExtArgs>
@@ -727,6 +772,7 @@ export type ProjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   window?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedOrigins?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -739,6 +785,7 @@ export type ProjectSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   window?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedOrigins?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["project"]>
 
@@ -751,9 +798,10 @@ export type ProjectSelectScalar = {
   window?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  allowedOrigins?: boolean
 }
 
-export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "userId" | "limit" | "window" | "createdAt" | "updatedAt", ExtArgs["result"]["project"]>
+export type ProjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "description" | "userId" | "limit" | "window" | "createdAt" | "updatedAt" | "allowedOrigins", ExtArgs["result"]["project"]>
 export type ProjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   apiKeys?: boolean | Prisma.Project$apiKeysArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -781,6 +829,7 @@ export type $ProjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     window: number
     createdAt: Date
     updatedAt: Date
+    allowedOrigins: string[]
   }, ExtArgs["result"]["project"]>
   composites: {}
 }
@@ -1214,6 +1263,7 @@ export interface ProjectFieldRefs {
   readonly window: Prisma.FieldRef<"Project", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Project", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Project", 'DateTime'>
+  readonly allowedOrigins: Prisma.FieldRef<"Project", 'String[]'>
 }
     
 

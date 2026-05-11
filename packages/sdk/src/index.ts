@@ -23,6 +23,7 @@ export class ShieldLimit {
         headers: {
           "x-shield-key": this.apiKey, //  custom header
           "Content-Type": "application/json",
+          "Origin": typeof window !== "undefined" ? window.location.origin : "server-side-sdk",
         },
       });
 

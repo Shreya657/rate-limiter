@@ -11,13 +11,11 @@ import projects from './routes/projects';
 
 const app = new Hono().basePath('/api/v1'); 
 
-const analytics = new Analytics({
-  redis,
-  prefix: "@upstash/ratelimit",
-});
 
 app.post('/verify', async (c) => {
   const apiKey = c.req.header('x-shield-key'); //custom header
+  const origin = c.req.header('origin');
+
   if (!apiKey) 
     return c.json({ error: 'Missing API Key' }, 401);
 
@@ -28,9 +26,10 @@ app.post('/verify', async (c) => {
   //syntax: redis.get<Type>(key) asks Redis for the value.
 let keyData = await redis.get<{ 
   projectId: string; 
-  apiKeyId: string; // Add this
+  apiKeyId: string; 
   limit: number; 
-  window: number 
+  window: number ;
+  allowedOrigins:string[] | null;
 }>(`key_cache:${hashedKey}`);
 
   if (!keyData) {
@@ -45,13 +44,25 @@ let keyData = await redis.get<{
 
   keyData = { 
     projectId: dbKey.projectId, 
-    apiKeyId: dbKey.id, // Capture the actual API Key ID here!
+    apiKeyId: dbKey.id, 
     limit: dbKey.project.limit, 
-    window: dbKey.project.window 
+    window: dbKey.project.window ,
+    allowedOrigins: dbKey.project.allowedOrigins
   };
 
     // store in redis for 5 minutes 
     await redis.set(`key_cache:${hashedKey}`, keyData, { ex: 300 });
+  }
+
+  if (keyData.allowedOrigins && keyData.allowedOrigins.length > 0) {
+    const cleanOrigin = origin?.replace(/^(https?:\/\/)/, "").replace(/\/$/, "");
+
+    if (!cleanOrigin || !keyData.allowedOrigins.includes(cleanOrigin)) {
+      return c.json({ 
+        error: 'Forbidden: Origin not whitelisted',
+        status: 403 
+      }, 403);
+    }
   }
 
   // sliding Window
@@ -65,7 +76,7 @@ let keyData = await redis.get<{
 console.log("STATS_ID_RECORDED:", keyData.projectId);
  const { success, limit, reset, remaining } = await ratelimit.limit(keyData.projectId);
 
-  // --- NEW CUSTOM LOGGING LOGIC ---
+
 const currentHour = new Date();
 // This sets minutes, seconds, and milliseconds to 0 correctly
 currentHour.setHours(currentHour.getHours(), 0, 0, 0);// Normalize to the start of the hour
@@ -105,4 +116,5 @@ app.route('/projects', projects);
 
 export const GET = handle(app);
 export const POST = handle(app);
+export const PATCH = handle(app);
 
