@@ -1,7 +1,7 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 
-import { Analytics, Ratelimit } from "@upstash/ratelimit";
+import {  Ratelimit } from "@upstash/ratelimit";
 import crypto from 'node:crypto'; // for node js env
 import { redis } from '../../../../utils/redish';
 import { prisma } from '../../../../utils/prisma';
@@ -73,13 +73,19 @@ let keyData = await redis.get<{
     analytics: false,
   });
 
-console.log("STATS_ID_RECORDED:", keyData.projectId);
- const { success, limit, reset, remaining } = await ratelimit.limit(keyData.projectId);
+// console.log("STATS_ID_RECORDED:", keyData.projectId);
+ const { success, limit, reset, remaining } = await ratelimit.limit(keyData.apiKeyId);
+
+
+// allows users to read limits without even parsing the json body
+  c.header('X-RateLimit-Limit', limit.toString());
+  c.header('X-RateLimit-Remaining', remaining.toString());
+  c.header('X-RateLimit-Reset', reset.toString());
 
 
 const currentHour = new Date();
 // This sets minutes, seconds, and milliseconds to 0 correctly
-currentHour.setHours(currentHour.getHours(), 0, 0, 0);// Normalize to the start of the hour
+currentHour.setHours(currentHour.getHours(), 0, 0, 0);//  to the start of the hour
 
   // We do this asynchronously so it doesn't slow down the response
 // Background task - won't block the 'return c.json'
@@ -91,7 +97,7 @@ prisma.keyUsage.upsert({
     },
   },
   update: {
-    // Only increment the one that actually happened
+    // only increment the one that actually happened
     success: success ? { increment: 1 } : undefined,
     blocked: !success ? { increment: 1 } : undefined,
   },
@@ -103,10 +109,30 @@ prisma.keyUsage.upsert({
   },
 }).catch(err => console.error("Analytics Save Failed:", err));
 
-  if (!success) {
-    return c.json({ error: 'Rate limit exceeded' }, 429);
+if (!success) {
+    const now = Date.now();
+    const retryAfter = Math.max(0, Math.floor((reset - now) / 1000));
+
+  // if (!success) {
+  //   return c.json({ error: 'Rate limit exceeded' }, 429);
+  // }
+  // return c.json({ success: true, remaining });
+  return c.json({ 
+      error: 'Rate limit exceeded',
+      message: `You have exhausted your API quota. Please try again in ${retryAfter} seconds.`,
+      limit,
+      remaining,
+      reset, // absolute timestamp
+      retryAfter // in sec
+    }, 429);
   }
-  return c.json({ success: true, remaining });
+
+  
+  return c.json({ 
+    success: true, 
+    remaining,
+    limit 
+  });
 });
 
 
