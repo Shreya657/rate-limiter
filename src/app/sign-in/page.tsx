@@ -8,11 +8,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { FaGithub, FaGoogle } from "react-icons/fa6";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); 
 
   const handleSignIn = async () => {
     await authClient.signIn.email({
@@ -34,7 +36,7 @@ export default function SignIn() {
   });
 };
 
-  return (
+ return (
     <div className="flex h-screen w-full items-center justify-center bg-black px-4">
       <Card className="w-full max-w-md border-zinc-800 bg-zinc-950 text-white">
         <CardHeader className="space-y-1">
@@ -46,40 +48,71 @@ export default function SignIn() {
         <CardContent className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" value={email} onChange={(e) => setEmail(e.target.value)} className="bg-zinc-900 border-zinc-800" />
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="m@example.com" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              className="bg-zinc-900 border-zinc-800" 
+            />
           </div>
       
           <div className="grid gap-2">
-  <div className="flex items-center justify-between">
-    <Label htmlFor="password">Password</Label>
-    <Link 
-      href="/forgot-password" 
-      className="text-xs text-zinc-400 hover:text-white underline-offset-4 hover:underline transition-colors"
-    >
-      Forgot password?
-    </Link>
-  </div>
-  <Input 
-    id="password" 
-    type="password" 
-    value={password} 
-    onChange={(e) => setPassword(e.target.value)} 
-    className="bg-zinc-900 border-zinc-800 focus:ring-1 focus:ring-white" 
-  />
-</div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="password">Password</Label>
+              <Link 
+                href="/forget-password" 
+                className="text-xs text-blue-500 hover:text-white underline-offset-4 hover:underline transition-colors"
+              >
+                Forgot password?
+              </Link>
+            </div>
+            <div className="relative">
+              <Input 
+                id="password" 
+                type={showPassword ? "text" : "password"} 
+                value={password} 
+                onChange={(e) => setPassword(e.target.value)} 
+                className="bg-zinc-900 border-zinc-800 focus:ring-1 focus:ring-white pr-10" 
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-200 transition-colors"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+          </div>
+
           <Button onClick={handleSignIn} disabled={loading} className="w-full bg-white text-black hover:bg-zinc-200">
             {loading ? "Logging in..." : "Sign In"}
           </Button>
-<div className="grid grid-cols-2 gap-4">
-  <Button variant="outline" onClick={() => handleSocialSignIn("github")} className="border-zinc-800 bg-zinc-900 hover:bg-zinc-900 gap-2">
-    <FaGithub className="w-4 h-4" />
-    GitHub
-  </Button>
-  <Button variant="outline" onClick={() => handleSocialSignIn("google")} className="border-zinc-800 hover:bg-zinc-900 gap-2 bg-zinc-900">
-   <FaGoogle className="w-4 h-4" />
-    Google
-  </Button>
-</div>
+
+          <div className="relative my-2">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t border-zinc-800" />
+            </div>
+            <div className="relative flex justify-center text-xs uppercase">
+              <span className="bg-zinc-950 px-2 text-zinc-500">Or continue with</span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <Button variant="outline" onClick={() => handleSocialSignIn("github")} className="border-zinc-800 bg-zinc-900 hover:bg-zinc-800 gap-2">
+              <FaGithub className="w-4 h-4" />
+              GitHub
+            </Button>
+            <Button variant="outline" onClick={() => handleSocialSignIn("google")} className="border-zinc-800 hover:bg-zinc-800 gap-2 bg-zinc-900">
+              <FaGoogle className="w-4 h-4" />
+              Google
+            </Button>
+          </div>
           <p className="text-center text-sm text-zinc-400">
             Don't have an account?{" "}
             <Link href="/sign-up" className="text-white underline underline-offset-4">
