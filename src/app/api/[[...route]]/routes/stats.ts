@@ -28,7 +28,7 @@ stats.get('/usage', async (c) => {
   const now = new Date();
 
   for (let i = 0; i < 24; i++) {
-    // Generate the last 24 individual hours
+    // 2. last 24 individual hours
     const hourDate = startOfHour(subHours(now, i));
     chartMap.set(hourDate.toISOString(), { authorized: 0, dropped: 0 });
   }

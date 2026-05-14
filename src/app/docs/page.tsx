@@ -30,6 +30,57 @@ export default function PublicDocs() {
     return () => observer.disconnect();
   }, []);
 
+
+
+//   useEffect(() => {
+//   async function showConsoleImage() {
+//     const response = await fetch("/homey.jpeg");
+//     const blob = await response.blob();
+
+//     const reader = new FileReader();
+
+//     reader.onloadend = () => {
+//       const base64data = reader.result;
+
+//       console.log(
+//         "%c ",
+//         `
+//         font-size: 1px;
+//         padding: 300px 450px;
+//         background-image: url("${base64data}");
+//         background-repeat: no-repeat;
+//         background-size: contain;
+//         `
+//       );
+
+//       console.log(
+//         "%c wlc mf.",
+//         `
+//         color: #14b8a6;
+//         font-size: 18px;
+//         font-weight: bold;
+//         `
+//       );
+
+//       // console.log(
+//       //   "%cStop snooping around the docs",
+//       //   `
+//       //   color: white;
+//       //   background: black;
+//       //   padding: 8px 12px;
+//       //   border-radius: 6px;
+//       //   `
+//       // );
+//     };
+
+//     reader.readAsDataURL(blob);
+//   }
+
+//   showConsoleImage();
+// }, []);
+
+
+
   const navItems = [
     { id: "intro", label: "Introduction" },
     { id: "how-it-works", label: "How it works" },

@@ -27,7 +27,7 @@ export function UsageChart({ chartData }: { chartData: any[] }) {
             type="monotone" dataKey="authorized" stroke="#14b8a6" fillOpacity={1} fill="url(#colorAuth)" 
             strokeWidth={2} name="Authorized"
           /> */}
-          // Inside usage-chart.tsx
+          {/* // Inside usage-chart.tsx */}
 <Area 
   type="monotone" // This makes the line curvy
   dataKey="authorized" 
@@ -39,14 +39,16 @@ export function UsageChart({ chartData }: { chartData: any[] }) {
             type="monotone" dataKey="dropped" stroke="#f97316" fillOpacity={1} fill="url(#colorDropped)" 
             strokeWidth={2} name="Dropped"
           /> */}
-          // Inside usage-chart.tsx
-<Area 
-  type="monotone" // This makes the line curvy
-  dataKey="authorized" 
-  stroke="#14b8a6" 
-  fill="url(#colorAuth)" 
-  connectNulls={true} // Ensures the line doesn't break
-/>
+          {/* // Inside usage-chart.tsx */}
+ <Area 
+            type="monotone" 
+            dataKey="dropped" 
+            stroke="#f97316" 
+            strokeWidth={2}
+            fill="url(#colorDropped)" 
+            connectNulls={true}
+            name="Dropped"
+          />
         </AreaChart>
       </ResponsiveContainer>
     </div>

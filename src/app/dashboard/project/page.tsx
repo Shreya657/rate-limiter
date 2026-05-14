@@ -8,7 +8,21 @@ import CreateProjectButton from "../../components/dashboard/createprojButton";
 
 export default async function DashboardPage() {
   const session = await auth.api.getSession({ headers: await headers() });
-  
+
+
+const image="/homey.jpeg";
+
+console.log(
+  "%c ",
+  `
+  font-size: 1px;
+  padding: 200px 300px;
+  background-image: url(${image});
+  background-size: contain;
+  background-repeat: no-repeat;
+  `
+);
+  console.log("User session teri ma ki:", session); // Debugging line to check session data
   const projects = await prisma.project.findMany({
     where: { userId: session?.user.id },
  

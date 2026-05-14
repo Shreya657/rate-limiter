@@ -13,15 +13,14 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
   const router = useRouter();
   const projectId = resolvedParams.projectId;
 
-  // --- State Management ---
+
   const [projects, setProjects] = useState<any[]>([]);
   const [apiKeys, setApiKeys] = useState<any[]>([]);
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [data, setData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 1. INITIAL PROJECT LOAD & REDIRECT
-  // Runs once to populate the project dropdown and handle the default redirect
+ 
   useEffect(() => {
     async function loadProjects() {
       try {
@@ -29,7 +28,6 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
         const json = await res.json();
         setProjects(json);
         
-        // If we're at a generic /stats URL, push to the most recent project
         if (projectId === "stats" && json.length > 0) {
           router.push(`/dashboard/${json[0].id}/stats`);
         }
@@ -40,19 +38,16 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
     loadProjects();
   }, [projectId, router]);
 
-  // 2. PARALLEL DATA FETCH (Keys + Stats)
-  // Consolidates multiple network requests into a single parallel operation
   useEffect(() => {
     async function fetchDashboardData() {
-      // Prevent fetching if we don't have a valid ID yet
-      if (!projectId || projectId === "stats") return;
+      if (!projectId || projectId === "stats")
+         return;
       
       setIsLoading(true);
       try {
         const statsUrl = `/api/v1/stats/usage?projectId=${projectId}${selectedKey ? `&apiKeyId=${selectedKey}` : ''}`;
         const keysUrl = `/api/v1/stats/keys?projectId=${projectId}`;
 
-        // Fire BOTH requests simultaneously to eliminate waterfalls
         const [statsRes, keysRes] = await Promise.all([
           fetch(statsUrl),
           fetch(keysUrl)
@@ -73,9 +68,8 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
     }
 
     fetchDashboardData();
-  }, [projectId, selectedKey]); // Re-runs instantly when project or key filter changes
+  }, [projectId, selectedKey]); 
 
-  // --- Early Returns for Loading ---
   if (isLoading && !data) {
     return (
       <div className="p-8 flex flex-col items-center justify-center min-h-[400px] animate-pulse">
@@ -84,7 +78,6 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
     );
   }
 
-  // --- Main Return JSX Starts Here ---
 
   return (
     <div className="p-8 space-y-8 max-w-7xl mx-auto">
@@ -95,14 +88,12 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
-          {/* Project Selector triggers a URL change */}
           <ProjectSelector 
             projects={projects} 
             currentProjectId={resolvedParams.projectId}
             onSelect={(id: string) => router.push(`/dashboard/${id}/stats`)} 
           />
           
-          {/* Key Selector triggers a local state change */}
           <KeySelector 
             apiKeys={apiKeys} 
             onSelect={setSelectedKey} 
