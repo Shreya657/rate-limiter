@@ -1,9 +1,14 @@
 {
   "name": "@esbi/shieldlimit",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc"
   }

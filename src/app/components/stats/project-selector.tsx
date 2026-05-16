@@ -1,12 +1,10 @@
-// components/stats/project-selector.tsx
 "use client";
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Folder } from "lucide-react";
 
-// components/stats/project-selector.tsx
 export function ProjectSelector({ projects, onSelect, currentProjectId }: any) {
-  // Find the active project name to show as a fallback
+  // find the active project name to show as a fallback
   const activeProject = projects?.find((p: any) => p.id === currentProjectId);
   console.log("activeProject", projects);
 
@@ -16,10 +14,9 @@ export function ProjectSelector({ projects, onSelect, currentProjectId }: any) {
       <Select 
         value={currentProjectId} 
         onValueChange={onSelect}
-        disabled={!projects || projects.length === 0} // Disable if data isn't here yet
+        disabled={!projects || projects.length === 0} 
       >
         <SelectTrigger className="w-[200px] text-white bg-zinc-900 border-zinc-800 shadow-md">
-          {/* Use the active project name if found, otherwise show the placeholder */}
           <SelectValue>
             {activeProject ? activeProject.name : "Select Project"}
           </SelectValue>

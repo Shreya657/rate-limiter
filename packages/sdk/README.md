@@ -1,40 +1,77 @@
-# @esbi/shieldlimit
+# 🛡️ @esbi/shieldlimit
 
-A high-performance, sliding-window rate limiting SDK built for modern TypeScript applications.
+An ultra-low latency, edge-first API protection and rate-limiting SDK designed for modern web applications. Protect your routes in under 10ms using Redis-backed token bucket metrics.
 
-## Features
-- **Fast**: Built on top of Hono and optimized for edge environments.
-- **Reliable**: Uses Redis (Upstash) for distributed rate limiting.
-- **Secure**: Implements SHA-256 hashing for API key protection.
-- **First Principles**: Designed with transparency and performance as core pillars.
+[![npm version](https://img.shields.io/npm/v/@esbi/shieldlimit.svg?color=14b8a6)](https://www.npmjs.com/package/@esbi/shieldlimit)
+[![license](https://img.shields.io/npm/l/@esbi/shieldlimit.svg?color=zinc)](https://github.com)
 
-## Installation
+---
+
+## ⚡ Features
+
+- **Edge-Optimized:** Zero heavy database bottlenecks—designed natively for edge environments like Next.js middleware.
+- **Cryptographically Secure:** Hashed API key checks with automatic origin verification.
+- **Smart Rate Limiting:** Returns accurate tracking headers (`Retry-After`, `remaining`, `limit`).
+
+## 📦 Installation
+
+Install the package via your preferred package manager:
 
 ```bash
 npm install @esbi/shieldlimit
+# or
+yarn add @esbi/shieldlimit
+# or
+pnpm add @esbi/shieldlimit
 
+```
 
-
+## 🚀 Quickstart (Next.js Middleware)
+```bash
 import { ShieldLimit } from "@esbi/shieldlimit";
 
-const shield = new ShieldLimit("your_api_key_here");
+// Initialize the shield instance
+const shield = new ShieldLimit(process.env.SHIELD_API_KEY);
 
-async function handleRequest() {
+export async function middleware(req) {
+  // Automatically parses request contextual properties
   const check = await shield.verify();
-
+  
   if (!check.success) {
-    console.error(`Error ${check.status}: ${check.error}`);
-    return;
+    return Response.json(
+      { 
+        error: check.error,
+        retryAfter: check.retryAfter 
+      }, 
+      { 
+        status: check.status,
+        headers: { 'Retry-After': String(check.retryAfter) }
+      }
+    );
   }
-
-  console.log(`Success! Remaining requests: ${check.remaining}`);
 }
 
+export const config = {
+  matcher: '/api/:path*',
+};
 
-
-| Property  | Type    | Description                       |
-| --------- | ------- | --------------------------------- |
-| success   | boolean | `true` if request is allowed      |
-| remaining | number  | Requests left in current window   |
-| status    | number  | HTTP status code (e.g., 200, 429) |
-| error     | string  | Error message if request fails    |
+```
+## 📊 Schema Reference
+Successful Verification (200 OK)
+```bash
+{
+  "success": true,
+  "remaining": 99,
+  "limit": 100
+}
+```
+## Rate Limit Exceeded (429 Too Many Requests)
+```bash
+{
+  "error": "Rate limit exceeded",
+  "retryAfter": 35,
+  "reset": 1778603700000
+}
+```
+📄 License
+MIT © Shreya

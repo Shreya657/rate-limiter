@@ -1,7 +1,11 @@
 export interface ShieldVerifyResponse {
     success: boolean;
     remaining?: number;
+    limit?: number;
+    reset?: number;
+    retryAfter?: number;
     error?: string;
+    message?: string;
     status: number;
 }
 export declare class ShieldLimit {

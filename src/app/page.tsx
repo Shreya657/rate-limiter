@@ -13,9 +13,7 @@ export default function Home() {
     <main className="min-h-screen bg-black text-zinc-200 selection:bg-white selection:text-black">
       <Navbar />
       
-      {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4 overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]" />
         
         <div className="max-w-5xl mx-auto text-center relative z-10">
@@ -50,7 +48,7 @@ export default function Home() {
                   <Link href="/sign-up">Start Building Free</Link>
                 </Button>
                 <Button variant="outline" size="lg" className="border-zinc-800 bg-zinc-900 hover:text-black text-white h-12 px-8" asChild>
-                  <Link href="https://github.com" target="_blank">Documentation</Link>
+                  <Link href="/docs" target="_blank">Documentation</Link>
                 </Button>
               </>
             )}
@@ -58,7 +56,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Feature Grid */}
       <section className="max-w-7xl mx-auto px-4 py-20 grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
           { icon: <Zap className="w-5 h-5" />, title: "Ultra Low Latency", desc: "Powered by Redis for sub-millisecond overhead on every request." },

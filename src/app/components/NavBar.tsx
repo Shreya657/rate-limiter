@@ -14,7 +14,7 @@ export default function Navbar() {
   const router = useRouter();
 
   const handleSignOut = async () => {
-    setIsLoggingOut(true); // Start loading
+    setIsLoggingOut(true); 
     try {
       await signOut({
         fetchOptions: {

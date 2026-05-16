@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-// import { UserButton } from "./UserButton"; // Use your existing user logic or a custom component
-import { ShieldCheck, Bell, LogOut,Loader2,User, Shield } from "lucide-react";
+// import { UserButton } from "./UserButton"; 
+import {  Bell, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { authClient, signOut } from "@/lib/auth-client";
 import { useState } from "react";
@@ -15,7 +15,7 @@ export default function Navbar() {
     const router = useRouter();
   
     const handleSignOut = async () => {
-      setIsLoggingOut(true); // Start loading
+      setIsLoggingOut(true); 
       try {
         await signOut({
           fetchOptions: {

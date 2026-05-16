@@ -34,17 +34,17 @@ const routes = [
 { 
     label: "Usage Stats", 
     icon: Activity, 
-    href: currentId ? `/dashboard/${currentId}/stats` : "/dashboard", 
+    href: currentId ? `/dashboard/${currentId}/stats` : "/dashboard/stats", 
     color: "text-pink-700" 
   },
 { 
   label: "Docs", 
   icon: BookOpen, 
-  href: currentId ? `/dashboard/${currentId}/doc` : "/dashboard", 
+  href: currentId ? `/dashboard/${currentId}/doc` : "/docs", 
   color: "text-blue-500" 
 },
   // { label: "Billing", icon: CreditCard, href: "/dashboard/billing" },
-  { label: "Settings", icon: Settings,  href: currentId ? `/dashboard/${currentId}/settings` : "/dashboard" },
+  { label: "Settings", icon: Settings,  href: currentId ? `/dashboard/${currentId}/settings` : "/dashboard/settings" },
 ];
 
   return (

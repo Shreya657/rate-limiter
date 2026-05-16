@@ -1,4 +1,3 @@
-// components/stats/key-selector.tsx
 import {
   Select,
   SelectContent,

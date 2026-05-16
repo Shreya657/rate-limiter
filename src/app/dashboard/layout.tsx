@@ -13,11 +13,10 @@ export default async function DashboardLayout({
 }) {
 const session = await auth.api.getSession({ headers: await headers() });
   
-  // Fetch projects here once
   const projects = await prisma.project.findMany({
     where: { userId: session?.user.id },
     orderBy: { createdAt: "desc" },
-    select: { id: true } // We only need the IDs for the sidebar links
+    select: { id: true } 
   });
 
   const activeProjectId = projects[0]?.id;

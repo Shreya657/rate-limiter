@@ -1,4 +1,3 @@
-// routes/stats.ts
 import { Hono } from 'hono';
 import { subHours, startOfHour } from 'date-fns';
 import { prisma } from '../../../../../utils/prisma';
@@ -11,7 +10,7 @@ stats.get('/usage', async (c) => {
 
   if (!projectId) return c.json({ error: 'Project ID is required' }, 400);
 
-  // 1. Fetch data from DB
+  // fetch data from DB
   const usageData = await prisma.keyUsage.findMany({
     where: {
       apiKey: {
@@ -23,7 +22,7 @@ stats.get('/usage', async (c) => {
     orderBy: { timestamp: 'asc' },
   });
 
-  // 2. Padding Logic: Create a map of the LAST 24 HOURS with 0s
+  //  Padding Logic: create a map of the LAST 24 HOURS with 0s
   const chartMap = new Map();
   const now = new Date();
 
@@ -33,7 +32,7 @@ stats.get('/usage', async (c) => {
     chartMap.set(hourDate.toISOString(), { authorized: 0, dropped: 0 });
   }
 
-  // 3. Merge DB data into our 24h map
+  //  Merge DB data into our 24h map
   usageData.forEach((row) => {
     const timeKey = startOfHour(row.timestamp).toISOString();
     if (chartMap.has(timeKey)) {
@@ -45,7 +44,7 @@ stats.get('/usage', async (c) => {
     }
   });
 
-  // 4. Sort and Format for Recharts
+  //  Sort and Format for Recharts
   const chartData = Array.from(chartMap.entries())
     .map(([time, counts]) => ({
       // Store raw date for sorting, then format label
@@ -56,7 +55,7 @@ stats.get('/usage', async (c) => {
     }))
     .sort((a, b) => a.rawDate.getTime() - b.rawDate.getTime()); // Sort chronologically
 
-  // 5. Calculate Totals
+  // Calculate Totals
   const totalAuthorized = usageData.reduce((acc, curr) => acc + curr.success, 0);
   const totalDropped = usageData.reduce((acc, curr) => acc + curr.blocked, 0);
   const totalIngress = totalAuthorized + totalDropped;

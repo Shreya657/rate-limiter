@@ -7,6 +7,8 @@ import EditProjectModal from "@/app/components/projectId/editProjModal";
 import CreateKeyButton from "@/app/components/projectId/createKeyBtn";
 import KeyTable from "@/app/components/projectId/keyTable";
 import { prisma } from "../../../../../utils/prisma";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 export default async function ProjectDetailPage({ params }: { params: { projectId: string } }) {
   const session = await auth.api.getSession({ headers: await headers() });
@@ -23,6 +25,14 @@ export default async function ProjectDetailPage({ params }: { params: { projectI
     <div className="space-y-10">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-8">
         <div>
+             <Link
+                        href="/dashboard/project" 
+                        className="flex items-center gap-2 text-sm text-zinc-500 hover:text-white transition-colors mb-8 group"
+                      >
+                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                        
+                      </Link>
+          
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-4xl font-extrabold text-white tracking-tight">{project.name}</h1>
          <Badge className="bg-zinc-800 text-zinc-400 border-zinc-700 font-mono">

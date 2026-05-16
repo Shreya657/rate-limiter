@@ -1,7 +1,5 @@
-// Example: routes/projects.ts
-// routes/projects.ts
+
 import { Hono } from 'hono';
-import { subHours, startOfHour } from 'date-fns';
 import { prisma } from '../../../../../utils/prisma';
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
@@ -10,7 +8,7 @@ import { generateApiKey } from '../../../../../utils/generateKey';
 const projects = new Hono();
 
 projects.get('/', async (c) => {
- const session = await auth.api.getSession({ headers: await headers() }); // Get session from NextAuth/Clerk/etc.
+ const session = await auth.api.getSession({ headers: await headers() }); 
   
   if (!session?.user?.id) {
     return c.json({ error: "Unauthorized" }, 401);
