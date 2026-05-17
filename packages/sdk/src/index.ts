@@ -17,7 +17,7 @@ export class ShieldLimit {
     this.apiKey = apiKey;
     // defaults to  prod api but allows local testing
     //will add baseurl once it deployed
-    this.baseUrl = options?.baseUrl || "http://localhost:3000/api/v1";
+    this.baseUrl = options?.baseUrl || "https://rate-limiter-swart.vercel.app/api/v1";
   }
 
   
