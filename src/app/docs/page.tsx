@@ -369,12 +369,12 @@ export default function PublicDocs() {
                 </span>
 
                 <code className="text-xs text-zinc-300">
-                  https://shield-limit.com/api/v1/verify
+                  https://rate-limiter-swart.vercel.app/api/v1/verify
                 </code>
               </div>
 
               <pre className="overflow-x-auto p-8 text-sm leading-8 text-zinc-500 font-mono bg-black">
-{`curl -X POST https://shield-limit.com/api/v1/verify \\
+{`curl -X POST https://rate-limiter-swart.vercel.app/api/v1/verify \\
   -H "x-shield-key: YOUR_API_KEY" \\
   -H "Content-Type: application/json"`}
               </pre>

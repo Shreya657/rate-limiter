@@ -106,8 +106,8 @@ export default function StatsPage({ params }: { params: Promise<{ projectId: str
       ) : (
         <>
           <StatCards summary={data.summary} />
-          <div className="bg-card p-6 rounded-xl border border-zinc-800 shadow-sm">
-            <h3 className="font-semibold mb-6 text-sm">Requests over last 24h</h3>
+          <div className="bg-zinc-950 p-6 rounded-xl border border-zinc-800 shadow-sm">
+            <h3 className="font-semibold mb-6 text-sm text-white">Requests over last 24h</h3>
             <UsageChart chartData={data.chartData} />
           </div>
         </>

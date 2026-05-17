@@ -91,7 +91,7 @@ export async function middleware(req) {
 
 
 
-const fetchCode = `const response = await fetch("https://shield-limit.vercel.app/api/v1/verify", {
+const fetchCode = `const response = await fetch("https://rate-limiter-swart.vercel.app/api/v1/verify", {
   method: "POST",
   headers: {
     "x-shield-key": "YOUR_SECRET_KEY",
@@ -150,7 +150,7 @@ if (!response.ok) {
 
                 <p className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Base Endpoint</p>
 
-                <code className="text-xs text-teal-400 font-mono">https://shieldlimit.com/api/v1/verify</code>
+                <code className="text-xs text-teal-400 font-mono">https://rate-limiter-swart.vercel.app/api/v1/verify</code>
 
             </div>
 
